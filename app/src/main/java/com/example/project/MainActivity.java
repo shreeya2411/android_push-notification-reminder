@@ -63,8 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "welcome", Toast.LENGTH_SHORT).show();
                     Intent movetohome;
-//                    movetohome.putExtra("USER_NAME", uname);
+
                     movetohome = new Intent(MainActivity.this, homeactivity.class);
+                    movetohome.putExtra("USER_NAME", uname);
                     startActivity(movetohome);
                 }
             }

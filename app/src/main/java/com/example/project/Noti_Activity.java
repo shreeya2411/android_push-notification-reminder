@@ -1,6 +1,8 @@
 package com.example.project;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,9 +20,11 @@ public class Noti_Activity extends AppCompatActivity {
     SQLiteOpenHelper openHelper;
     SQLiteDatabase db;
     Cursor cursor;
-    Button back1;
+    Button back1,summary;
     StringBuffer buf;
+    int num =1;
     ArrayList<String> bid,bauthor,btitle,bdate;
+    String uName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +32,14 @@ public class Noti_Activity extends AppCompatActivity {
         openHelper = new DatabaseHelper(this);
         dbh = new DatabaseHelper(getApplicationContext());
         back1 = (Button)findViewById(R.id.back);
+        summary = (Button)findViewById(R.id.summary);
 
         bid = new ArrayList<>();
         bauthor = new ArrayList<>();
         btitle = new ArrayList<>();
         bdate = new ArrayList<>();
         buf = new StringBuffer();
-
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         back1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,31 +47,50 @@ public class Noti_Activity extends AppCompatActivity {
                 startActivity(home);
             }
         });
-        try {
-            cursor = dbh.readData("sowmya");
+        Bundle extras = getIntent().getExtras();
 
-            if (cursor.getCount() == 0) {
-                Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                buf.append("ID\tTitle\tAuthor\tDueDate\n");
-                while (cursor.moveToNext()) {
-                    buf.append(cursor.getString(0) + "\t");
-                    buf.append(cursor.getString(1) + "\t");
-                    buf.append(cursor.getString(2) + "\t");
-                    buf.append(cursor.getString(3) + "\t");
-                    buf.append("\n");
+        if (extras != null) {
+            uName = extras.getString("USER_NAME");
+            Toast.makeText(getApplicationContext(), uName, Toast.LENGTH_SHORT).show();
+        }
+
+
+        summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                    cursor = dbh.readData(uName);
+
+                    if (cursor.getCount() == 0) {
+                        Toast.makeText(getApplicationContext(), "no data", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+
+                        while (cursor.moveToNext()) {
+                            buf.append("S.NO : "+ num + "\n");
+                            buf.append("TITLE : "+cursor.getString(1) + "\n");
+                            buf.append("AUTHOR : "+cursor.getString(2) + "\n");
+                            buf.append("DUE DATE : "+cursor.getString(3) + "\n");
+                            //buf.append(cursor.getString(4) + "\n");
+                            buf.append("\n");
+                            num=num+1;
+                        }
+
+
+                        //Builder builder = new Builder(getApplicationContext());
+                        builder.setCancelable(true);
+                        builder.setTitle("Summary");
+                        builder.setMessage(buf);
+                        builder.show();
+                    }
                 }
-                Builder builder = new Builder(this);
-                builder.setCancelable(true);
-                builder.setTitle("Summary");
-                builder.setMessage(buf);
-                builder.show();
+                catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             }
-        }
-        catch (Exception e){
-            Toast.makeText(this, "Exception", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        });
+
     }
 }

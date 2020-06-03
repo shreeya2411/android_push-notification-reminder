@@ -21,7 +21,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="75dp"
-        android:layout_marginLeft="140dp"
+        android:layout_marginLeft="130dp"
         android:src="@drawable/education"
         />
     <TextView
@@ -63,7 +63,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginLeft="55dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="45dp"
             android:background="@color/dull_blue"
             android:fontFamily="sans-serif-condensed"
             android:paddingTop="10dp"
@@ -80,6 +80,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="New user?signup"
+            android:textSize="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 

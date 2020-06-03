@@ -8,11 +8,6 @@
     android:orientation="vertical"
     android:background="@color/white" >
 
-    <Button
-        android:id="@+id/summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="summary" />
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="300dp"
         android:layout_height="600dp"
@@ -63,6 +58,11 @@
             android:layout_marginTop="50dp"
             android:hint="Author"
             android:inputType="text" />
+
+
+
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_checkout"
